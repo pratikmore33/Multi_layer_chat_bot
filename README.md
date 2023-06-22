@@ -22,11 +22,12 @@ To try out the chatbot locally, follow these steps:
    git clone <repository-url>
    
 # Run this command to build docker image
-docker build -t chatbot .
+   ```bash
+   docker build -t chatbot .
 
 # Run the Docker container:
-
-docker run -d -p 8000:8000 chatbot
+   ```bash
+   docker run -d -p 8000:8000 chatbot
 
 Access the chatbot at http://localhost:8000
 
