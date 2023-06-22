@@ -1,0 +1,32 @@
+frist layer choice 
+상품 문의
+가입방법
+정보 수정(변경) 및 가입확인서 발급
+사고 접수
+
+second layer choice for 상품 문의
+풍수해 6(상품)
+풍수해 3(상품)
+
+third layer choice for 상품 문의 and 풍수해 6(상품)
+가입대상
+보상(담보)내용
+기타
+
+third layer choice for 상품 문의 and 풍수해 3(상품)
+가입대상
+보상(담보)내용
+기타
+
+second layer for 가입방법
+풍수해 6(상품)
+풍수해 3(상품)
+
+second layer for 정보 수정(변경) 및 가입확인서 발급
+정보 수정
+가입확인서 발급
+
+second layer for 사고 접수
+사고 접수 방법
+
+

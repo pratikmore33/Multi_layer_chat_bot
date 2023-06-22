@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Rule-based Chatbot</title>
+    <link rel="stylesheet" type="text/css" href="/static/style.css">
+    <script src="/static/script.js"></script>
+</head>
+<body>
+    <div class="chat-container">
+        <div class="chat-header">
+            <h1>Rule-based Chatbot</h1>
+        </div>
+        <div class="chat-body" id="chat-body">
+            <!-- Chat messages will be dynamically added here -->
+        </div>
+        <div class="chat-footer">
+            <input type="text" id="user-input" placeholder="Type your message..." autocomplete="off">
+            <button id="send-button">Send</button>
+        </div>
+    </div>
+    <script>
+        // JavaScript code to handle chat interactions
+        // You can write your own implementation or use a chatbot library
+        // Here's a simple example using plain JavaScript
+        // Replace or enhance this code as per your requirements
+
+        // Get the necessary HTML elements
+        const chatBody = document.getElementById('chat-body');
+        const userInput = document.getElementById('user-input');
+        const sendButton = document.getElementById('send-button');
+
+        // Pre-defined sample questions
+        const sampleQuestions = [
+            "상품 문의",
+            "가입방법",
+            "정보 수정(변경) 및 가입확인서 발급",
+            "사고 접수"
+        ];
+
+        // Display sample questions when the page loads
+        sampleQuestions.forEach(question => {
+            addMessage('bot', question, true);
+        });
+
+        // Add event listener for send button click
+        sendButton.addEventListener('click', sendMessage);
+
+        // Add event listener for user input text field enter key press
+        userInput.addEventListener('keypress', function (event) {
+            if (event.key === 'Enter') {
+                sendMessage();
+            }
+        });
+
+        // Function to send user message and get chatbot response
+        // Function to send user message and get chatbot response
+        function sendMessage() {
+          const userMessage = userInput.value;
+          if (userMessage) {
+            addMessage('user', userMessage); // Display user message in the chat UI
+            userInput.value = ''; // Clear the user input text field
+
+            // Send the user message to the server (API endpoint) for processing
+            fetch('/answer?q=' + encodeURIComponent(userMessage))
+              .then(response => response.text())
+              .then(response => {
+                // console.log(response.split("<br/>"),'fhdhdd')
+                // const formattedResponse = response.split('<br/>')
+                const formattedResponse = response.replace(/['"]/g, ''); // Remove both single quotes and double quotes from the response
+                addMessage('bot', formattedResponse, true); // Display chatbot response in the chat UI and make it clickable
+              })
+              .catch(error => {
+                console.error('Error:', error);
+              });
+          }
+        }
+
+
+        // Function to add chat messages to the chat UI
+        // Function to add chat messages to the chat UI
+        function addMessage(sender, message, isClickable = false) {
+          const chatMessage = document.createElement('div');
+          chatMessage.className = 'chat-message ' + sender;
+          console.log(sender);
+          const chatMessage1 = document.createElement('div');
+          chatMessage1.className = 'chat-message ' + sender;
+
+          if (isClickable) {
+            let text = message;
+            let demo = text.split("<br/>");
+               console.log(message, "check demo of this ");
+            const clickableMessage = document.createElement('span');
+            clickableMessage.className = 'clickable';
+            clickableMessage.innerHTML = demo[0];
+            clickableMessage.addEventListener('click', function () {
+              userInput.value = demo[0];
+              sendMessage();
+            });
+            chatMessage.appendChild(clickableMessage);
+            //second line of input
+            const clickableMessagesecond = document.createElement('p'); 
+            clickableMessagesecond.className = 'clickable_second';
+            clickableMessagesecond.innerHTML = demo[1];
+            clickableMessagesecond.addEventListener('click', function () {
+              userInput.value = demo[1];
+              sendMessage();
+            });
+            // document.body.appendChild(clickableMessagesecond)
+            chatMessage1.appendChild(clickableMessagesecond);
+            
+          } else {
+            const messageLines = message.split('<br>');
+            console.log(message,'sample test') // Split message by <br> tags
+            messageLines.forEach(line => {
+              const lineElement = document.createElement('div');
+              lineElement.innerHTML = line;
+              if (line !== '') {
+                lineElement.classList.add('response-line');
+                lineElement.addEventListener('click', function () {
+                  userInput.value = line;
+                  sendMessage();
+                });
+              }
+              chatMessage.appendChild(lineElement);
+            });
+          }
+
+          chatBody.appendChild(chatMessage);
+          chatBody.scrollTop = chatBody.scrollHeight; // Scroll to the bottom of the chat body
+        }
+
+
+
+
+    </script>
+
+</body>
+</html>
+
+
